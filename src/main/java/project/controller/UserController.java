@@ -1,54 +1,47 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import project.model.User;
 import project.servise.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
+@RequestMapping
 public class UserController {
 
 	@Autowired
 	UserService userService;
 
-	@GetMapping(value = "/")
-	public String users(ModelMap modelMap) {
-		modelMap.addAttribute("userscrud", userService.allUser());
-		return "users";
+	@GetMapping(value = "/login")
+	public String loginPage() {
+		return "login";
 	}
 
-	@PostMapping(value = "/editUser")
-	public String editUser(@ModelAttribute User user) {
-		userService.editUser(user);
-		return  "redirect:/";
+	@GetMapping(value = "/user")
+	public String user(ModelMap model) {
+		return "user";
 	}
 
-	@PostMapping(value = "/")
-	public String addUser(User user) {
+
+	@PostMapping(value = "/registration")
+	public String addUser(@ModelAttribute User user) {
 		userService.add(user);
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
-	@GetMapping(value = "/deleteUser")
-	public String userDelete(@RequestParam(name = "userId") String id) {
-		userService.delete(id);
-		return "redirect:/";
+	@GetMapping(value = "/registration")
+	public String redistrationTo(ModelMap model) {
+		model.addAttribute("addForm", new User());
+		return "registration";
 	}
 
-//	@PostMapping(value = "/deleteUser")
-//	public String deleteUser(@ModelAttribute User user) {
-//		userService.delete(user);
-//		return "redirect:/";
-//	}
 
-//	@GetMapping(value = "/")
-//	public String editUser(ModelMap model, User user) {
-//		UserService userService = new UserServiceImp();
-//		userService.delete(user);
-//		return "users";
-//	}
 }
 
 

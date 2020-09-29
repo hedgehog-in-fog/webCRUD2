@@ -10,5 +10,6 @@ public interface UserDao {
 	User getUserIdByEdit(long id);
 	void delete(long user);
 	void editUser(User user);
+	User getUserByName(String name);
 //	User getUserIdByDelete(String id);
 }

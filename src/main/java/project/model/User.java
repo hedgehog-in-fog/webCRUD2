@@ -1,38 +1,46 @@
 package project.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table(name = "usersCRUD")
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "user_id")
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	private String name;
 
-	@Column(name = "characte")
-	private String character;
+	@Column(name = "password")
+	private String password;
 
 	@Column(name = "age")
 	private int age;
 
-	public User() {
+	@Column(name = "role")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable (name="users_roles",
+			joinColumns=@JoinColumn (name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="role_id"))
+	private List<Role> roleList;
 
-	}
-
-	public User(String name, String character, int age) {
+	public User(Long id, String name, String password, int age, List<Role> roleList) {
+		this.id = id;
 		this.name = name;
-		this.character = character;
+		this.password = password;
 		this.age = age;
+		this.roleList = roleList;
 	}
+
+	public User(){}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -42,8 +50,8 @@ public class User {
 		this.name = name;
 	}
 
-	public void setCharacter(String character) {
-		this.character = character;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setAge(int age) {
@@ -54,25 +62,43 @@ public class User {
 		return id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getCharacter() {
-		return character;
-	}
-
 	public int getAge() {
 		return age;
 	}
 
+
 	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", character='" + character + '\'' +
-				", age=" + age +
-				'}';
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roleList;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return name;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

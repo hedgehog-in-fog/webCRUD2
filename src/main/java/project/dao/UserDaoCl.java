@@ -6,6 +6,7 @@ import project.model.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.swing.text.html.Option;
 import java.util.List;
 
 @Repository
@@ -47,6 +48,12 @@ public class UserDaoCl implements UserDao {
 	@Override
 	public void editUser(User user) {
 		entityManager.merge(user);
+	}
+
+	@Override
+	public User getUserByName(String name) {
+		User user = (User) entityManager.createQuery("from User where name =:name").setParameter("name", name).getSingleResult();
+		return user;
 	}
 
 //	@Override
