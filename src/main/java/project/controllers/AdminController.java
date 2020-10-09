@@ -1,11 +1,11 @@
-package project.controller;
+package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import project.model.User;
-import project.servise.UserService;
+import project.entity.User;
+import project.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ public class AdminController {
         return  "redirect:/admin/";
     }
 
-    @GetMapping(value = "admin/editUser")
+    @GetMapping(value = "/admin/editUser")
     public String usersEditForm(ModelMap modelMap, @RequestParam(name = "id") String id) {
-        modelMap.addAttribute("eduser", userService.getUserIdByEdit(id));
+        modelMap.addAttribute("editUser", userService.getUserIdByEdit(id));
         return "edituser";
     }
 
@@ -39,7 +39,13 @@ public class AdminController {
     @GetMapping(value = "/admin/deleteUser")
     public String userDelete(@RequestParam(name = "userId") String id) {
         userService.delete(id);
-        return "redirect:/adnin/";
+        return "redirect:/admin/";
+    }
+
+    @GetMapping(value = "/admin/addRoleAdmin")
+    public String addRoleAdmin(@RequestParam(name = "userId") String id) {
+        userService.addRoleAdmin(id);
+        return "redirect:/admin/";
     }
 
     @GetMapping(value = "/admin/hello")

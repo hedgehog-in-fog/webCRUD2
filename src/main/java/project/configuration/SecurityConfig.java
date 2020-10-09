@@ -1,7 +1,6 @@
-package project.config;
+package project.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,30 +11,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import project.config.handler.LoginSuccessHandler;
+import project.configuration.handler.LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService detailsService;
-    private final LoginSuccessHandler loginHandler;
+//    @Autowired
+    private final UserDetailsService userDetailsService;
+//    @Autowired
+    private final LoginSuccessHandler loginSuccessHandler;
 
-    public SecurityConfig(@Qualifier("userDetailsServiceImpl")UserDetailsService detailsService, LoginSuccessHandler loginHandler) {
-        this.detailsService = detailsService;
-        this.loginHandler = loginHandler;
+    public SecurityConfig(UserDetailsService userDetailsService, LoginSuccessHandler loginSuccessHandler) {
+        this.userDetailsService = userDetailsService;
+        this.loginSuccessHandler = loginSuccessHandler;
     }
 
-//    public SecurityConfig(boolean disableDefaults, UserDetailsService detailsService, LoginSuccessHandler loginHandler) {
-//        super(disableDefaults);
-//        this.detailsService = detailsService;
-//        this.loginHandler = loginHandler;
-//    }
 
+    @Autowired
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
-        auth.userDetailsService(detailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -44,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем страницу с формой логина
                 .loginPage("/login")
                 //указываем логику обработки при логине
-                .successHandler(loginHandler)
+                .successHandler(loginSuccessHandler)
                 // указываем action с формы логина
                 .loginProcessingUrl("/login")
                 // Указываем параметры логина и пароля с формы логина

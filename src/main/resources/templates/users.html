@@ -1,8 +1,6 @@
-<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">-->
 <!DOCTYPE html>
-<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -12,7 +10,7 @@
 <!--/*@thymesVar id="user" type="java"*/-->
 <div>
     <table border="3">
-            <tr th:each="users:${userscrud}">
+            <tr th:each="user:${userscrud}">
                 <td>
                     <a th:href="@{/admin/deleteUser(userId=${user.id})}">
                         <button value="delete">delete</button>
@@ -20,10 +18,14 @@
                     <a th:href="@{/admin/editUser(id=${user.id})}">
                         <button value="edit">edit</button>
                     </a>
+                    <a th:href="@{/admin/addRoleAdmin(userId=${user.id})}">
+                        <button value="addRole">addRoleAdmin</button>
+                    </a>
                 </td>
-                <td th:text="${users.id}"></td>
-                <td th:text="${users.name}"></td>
-                <td th:text="${users.age}"></td>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.roleList}"></td>
             </tr>
 
             <!--<input type="button" name="delete" value="delete">-->
@@ -31,8 +33,11 @@
 
     </table>
 </div>
-
+<a th:href="@{/logout}">
+    <button value="logout">logout</button>
+</a>
 
 </body>
 
+</html>
 </html>

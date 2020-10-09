@@ -1,4 +1,4 @@
-package project.model;
+package project.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import java.util.List;
@@ -55,4 +55,10 @@ public class Role implements GrantedAuthority{
         return roleName;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleName='" + roleName + '\'' +
+                '}';
+    }
 }

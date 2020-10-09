@@ -1,4 +1,4 @@
-package project.config;
+package project.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -19,7 +19,7 @@ import java.util.Properties;
 	@Configuration
 	@PropertySource("classpath:db.properties")
 	@EnableTransactionManagement
-	@ComponentScan(value = "project.model")
+	@ComponentScan(value = "project.entity")
 	public class AppConfig {
 
 		@Autowired

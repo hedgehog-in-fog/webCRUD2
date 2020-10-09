@@ -10,110 +10,137 @@
 
     <packaging>war</packaging>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+    </parent>
+
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            <dependency>-->
+<!--                &lt;!&ndash; Import dependency management from Spring Boot &ndash;&gt;-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-dependencies</artifactId>-->
+<!--                <version>1.3.0.M5</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
+
+
+
+
     <build>
         <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>2.4</version>
-                    <configuration>
-                        <warSourceDirectory>src/webapp</warSourceDirectory>
-                        <warName>spring_mvc</warName>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        </pluginManagement>
     </build>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.2.0.RELEASE</spring.version>
 
+
+
+
+<!--    <build>-->
+<!--        <pluginManagement>-->
+<!--            <plugins>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-war-plugin</artifactId>-->
+<!--                    <version>2.4</version>-->
+<!--                    <configuration>-->
+<!--                        <warSourceDirectory>src/webapp</warSourceDirectory>-->
+<!--                        <warName>spring_mvc</warName>-->
+<!--                        <failOnMissingWebXml>false</failOnMissingWebXml>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--            </plugins>-->
+<!--        </pluginManagement>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>8</source>-->
+<!--                    <target>8</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
+    <properties>
+        <java.version>8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--        <spring.version>5.2.0.RELEASE</spring.version>-->
     </properties>
 
     <dependencies>
-
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.2.9.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- наш старый добрый thymeleaf шаблонизатор -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
-            <scope>provided</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- горячая подмена, выключенный кеш для шаблонов, включенный live reload -->
         <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.9.RELEASE</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <optional>true</optional>
+        <scope>runtime</scope>
         </dependency>
+
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-core</artifactId>-->
+<!--            <version>5.2.9.Final</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>javax</groupId>-->
+<!--            <artifactId>javaee-api</artifactId>-->
+<!--            <version>7.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.21</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.0.1.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>5.0.1.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>5.0.8.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.0.8.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${spring.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
 
@@ -132,19 +159,10 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.3.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <version>3.0.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.9.RELEASE</version>
-        </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

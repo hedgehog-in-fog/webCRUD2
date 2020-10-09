@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/admin/editUser}"  th:object="${user}" th:method="post">
+    <input type="text" name="id" th:value="${editUser.id}"  readonly="readonly"/>
+    <label>Name</label>
+    <input type="text" name="name" th:value="${editUser.name}"/>
+    <input type="password" name="password" th:value="${editUser.password}"  readonly="readonly"/>
+    <label>Age</label>
+    <input type="text" name="age" th:value="${editUser.age}"/>
+<!--    <label>Role</label>-->
+<!--    <input type="text" name="roleList" th:value="${editUser.roleList}"/>-->
+    <div >
+       <button id="editUser" type="submit">Edit user</button>
+    </div>
+</form>
+</body>
+</html>
+</html>

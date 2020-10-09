@@ -1,6 +1,6 @@
-package project.servise;
+package project.service;
 
-import project.model.User;
+import project.entity.User;
 
 import java.util.List;
 
@@ -10,5 +10,6 @@ public interface UserService {
 	User getUserIdByEdit(String id);
 	void editUser(User user);
 	void delete(String u);
+	void addRoleAdmin(String u);
 //	User getUserByDelete(String id);
 }

@@ -1,15 +1,12 @@
-package project.controller;
+package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import project.model.User;
-import project.servise.UserService;
-
-import java.util.ArrayList;
-import java.util.List;
+import project.entity.User;
+import project.service.UserService;
 
 @Controller
 @RequestMapping
@@ -18,13 +15,14 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(value = "/login")
+	@GetMapping("/login")
 	public String loginPage() {
 		return "login";
 	}
 
 	@GetMapping(value = "/user")
-	public String user(ModelMap model) {
+	public String user(ModelMap model, @AuthenticationPrincipal User user) {
+		model.addAttribute("user", user);
 		return "user";
 	}
 

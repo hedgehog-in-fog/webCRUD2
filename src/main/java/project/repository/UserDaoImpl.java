@@ -1,16 +1,19 @@
-package project.dao;
+package project.repository;
 
+import org.apache.el.stream.Optional;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import project.model.User;
+import project.entity.Role;
+import project.entity.User;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.swing.text.html.Option;
 import java.util.List;
 
 @Repository
-public class UserDaoCl implements UserDao {
+public class UserDaoImpl implements UserDao {
 
 
 	@PersistenceContext
@@ -30,7 +33,7 @@ public class UserDaoCl implements UserDao {
 	}
 
 	@Override
-	public User getUserIdByEdit(long longID) {
+	public User getUserId(long longID) {
 		return (User) entityManager.createQuery("from User where id =:longID")
 				.setParameter("longID", longID)
 				.getSingleResult();
@@ -52,11 +55,22 @@ public class UserDaoCl implements UserDao {
 
 	@Override
 	public User getUserByName(String name) {
-		User user = (User) entityManager.createQuery("from User where name =:name").setParameter("name", name).getSingleResult();
+			User user = (User) entityManager.createQuery("from User where name =:name").setParameter("name", name).getResultList().stream().findFirst().orElse(null);
 		return user;
 	}
 
-//	@Override
+	@Transactional
+	@Override
+	public void addRoleAdmin(User user) {
+		entityManager.persist(user);
+
+	}
+
+	@Override
+	public List<Role> getRole(String role) {
+		return entityManager.createQuery("from Role where name=:role").setParameter("role", role).getResultList();
+	}
+	//	@Override
 //	public User getUserIdByDelete(String id) {
 //		return (User) entityManager.createQuery("from User where id ="+ id).getSingleResult();
 //	}

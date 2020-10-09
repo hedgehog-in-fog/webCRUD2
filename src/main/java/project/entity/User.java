@@ -1,4 +1,4 @@
-package project.model;
+package project.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +66,13 @@ public class User implements UserDetails {
 		return age;
 	}
 
+	public String getName(){return name;}
+
+	public List<Role> getRoleList(){return roleList;}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -100,5 +107,16 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", password='" + password + '\'' +
+				", age=" + age +
+				", roleList=" + roleList +
+				'}';
 	}
 }
